@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Fuente primaria — análisis de discurso público</title>
+<meta name="description" content="Proyecto independiente que analiza discurso público de personas en función pública o candidatas, documentos oficiales y normativa, y programas partidarios.">
+
+<!-- ==========================================================================
+     COMPARTIDO EN REDES
+     Reemplazá las dos URL de abajo por la tuya cuando publiques.
+     Los lectores de Open Graph NO resuelven rutas relativas: acá van absolutas.
+     ========================================================================== -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fuente primaria">
+<meta property="og:description" content="Analizamos lo que se dijo, no lo que quisimos escuchar.">
+<meta property="og:url" content="https://USUARIO.github.io/">
+<meta property="og:image" content="https://USUARIO.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Único pedido a un servidor externo. Si lo borrás, el sitio cae con
+     elegancia a las tipografías del sistema: nada se rompe. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231B2A41'/><g stroke='white' stroke-width='11' fill='none' stroke-linejoin='miter'><path d='M52 28 L30 50 L52 72'/><path d='M84 28 L62 50 L84 72'/></g></svg>">
+
+<style>
+/* ==========================================================================
+   FUENTE PRIMARIA — hoja de estilo única
+   ========================================================================== */
+
+:root{
+  --crema:#F4F1E8;
+  --tinta:#1B2027;
+  --verde:#1E4D42;
+  --marino:#1B2A41;
+  --naranja:#D2601A;
+  --teal:#009B8E;
+  --caja:#E8EFEA;
+  --regla:#D8D3C4;
+  --gris:#6B6B66;
+  --papel:#FBF9F3;
+
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+
+  --medida:66ch;
+  --ancho:1120px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--crema);
+  color:var(--tinta);
+  font-family:var(--sans);
+  font-size:clamp(16px,0.95rem + 0.2vw,17.5px);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;height:auto;display:block}
+
+a{color:var(--verde);text-underline-offset:.18em;text-decoration-thickness:.06em}
+a:hover{color:var(--tinta)}
+:focus-visible{outline:2px solid var(--verde);outline-offset:3px;border-radius:2px}
+
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;line-height:1.15;letter-spacing:-.01em;margin:0}
+h2{font-size:clamp(1.6rem,1.25rem + 1.4vw,2.3rem)}
+h3{font-size:clamp(1.2rem,1.05rem + .6vw,1.45rem)}
+p{margin:0 0 1.05em}
+p:last-child{margin-bottom:0}
+
+.contenedor{width:min(100% - 2.5rem,var(--ancho));margin-inline:auto}
+.prosa{max-width:var(--medida)}
+.prosa p + h3{margin-top:2em}
+
+.kicker{
+  font-size:.72rem;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--gris);margin:0 0 .9rem;
+}
+.num{color:var(--verde);font-variant-numeric:tabular-nums}
+
+.saltar{
+  position:absolute;left:-9999px;top:0;background:var(--verde);color:#fff;
+  padding:.7rem 1.1rem;z-index:100;border-radius:0 0 4px 0;
+}
+.saltar:focus{left:0}
+
+/* ---------- Encabezado ---------- */
+.sitio-header{
+  position:sticky;top:0;z-index:50;
+  background:var(--crema);border-bottom:1px solid var(--regla);
+}
+.sitio-header .contenedor{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1.5rem;padding:.85rem 0;flex-wrap:wrap;
+}
+.marca{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:inherit}
+.marca svg{display:block;flex:none}
+.marca__texto{font-family:var(--serif);font-size:1.22rem;font-weight:600;letter-spacing:-.015em;white-space:nowrap}
+.marca__texto em{font-style:normal;color:var(--verde)}
+
+.nav{display:flex;gap:1.4rem;flex-wrap:wrap}
+.nav a{
+  font-size:.85rem;font-weight:500;color:var(--tinta);text-decoration:none;
+  padding-bottom:2px;border-bottom:1.5px solid transparent;
+}
+.nav a:hover{border-bottom-color:var(--verde);color:var(--verde)}
+.nav a[aria-current="page"]{border-bottom-color:var(--verde);color:var(--verde)}
+
+.boton{
+  display:inline-block;font-family:var(--sans);font-size:.88rem;font-weight:600;
+  letter-spacing:.02em;text-decoration:none;color:#fff;background:var(--verde);
+  padding:.75em 1.4em;border-radius:2px;
+}
+.boton:hover{background:var(--marino);color:#fff}
+
+/* ---------- Dos vistas en un solo archivo ----------
+   La portada se muestra por defecto. Al hacer clic en «Fichas» el navegador
+   marca #pagina-fichas como :target, y el :has() del body esconde la portada.
+   Sin JavaScript. Si un navegador viejo no soporta :has(), las fichas
+   aparecen debajo de la portada en vez de reemplazarla: se degrada, no se
+   rompe. */
+#pagina-fichas{display:none}
+#pagina-fichas:target{display:block}
+body:has(#pagina-fichas:target) #pagina-inicio{display:none}
+body:has(#pagina-fichas:target) .nav a[href="#pagina-fichas"]{
+  border-bottom-color:var(--verde);color:var(--verde);
+}
+
+/* ---------- Portada ---------- */
+.portada{padding:clamp(3.5rem,8vw,6.5rem) 0 clamp(2.5rem,5vw,4rem)}
+.portada h1{
+  font-size:clamp(2.1rem,1.4rem + 3.2vw,3.6rem);
+  max-width:16ch;margin-bottom:1.6rem;
+}
+.portada h1 em{font-style:normal;color:var(--verde)}
+.portada .prosa{font-size:1.05em}
+.portada .prosa > p:first-child{
+  font-family:var(--serif);font-size:1.3em;line-height:1.45;color:var(--tinta);
+}
+
+.pilares{
+  display:grid;gap:1px;background:var(--regla);
+  border:1px solid var(--regla);margin-top:3rem;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));
+}
+.pilar{background:var(--crema);padding:1.4rem 1.5rem}
+.pilar h3{font-size:1.02rem;margin-bottom:.45rem}
+.pilar p{font-size:.9rem;color:var(--gris);line-height:1.55}
+
+/* ---------- Secciones ---------- */
+.seccion{padding:clamp(3rem,6vw,5rem) 0;border-top:1px solid var(--regla)}
+.seccion > .contenedor > .kicker{margin-bottom:.5rem}
+.seccion__titulo{margin-bottom:1.8rem}
+
+.pasada{
+  border-left:2px solid var(--regla);padding:0 0 1.6rem 1.5rem;
+  max-width:var(--medida);
+}
+.pasada:last-of-type{padding-bottom:0}
+.pasada h3{margin-bottom:.4rem}
+.pasada h3 .num{margin-right:.5rem;font-size:.85em}
+.pasada p{font-size:.95rem;color:#3A3F45}
+
+.tabla-simple{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.92rem}
+.tabla-simple th,.tabla-simple td{
+  text-align:left;vertical-align:top;padding:.7rem .9rem;
+  border-bottom:1px solid var(--regla);
+}
+.tabla-simple th{
+  font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gris);font-weight:600;border-bottom-width:1.5px;
+}
+
+.lista-no{list-style:none;padding:0;margin:0;max-width:var(--medida)}
+.lista-no li{
+  position:relative;padding-left:1.6rem;margin-bottom:.75rem;font-size:.95rem;
+}
+.lista-no li::before{
+  content:"—";position:absolute;left:0;color:var(--naranja);font-weight:600;
+}
+
+/* ---------- Ficha ---------- */
+.ficha{
+  background:var(--papel);border:1px solid var(--regla);
+  padding:clamp(1.5rem,4vw,3rem);margin-bottom:3rem;
+}
+.ficha__cabezal{border-bottom:1.5px solid var(--tinta);padding-bottom:1.4rem;margin-bottom:1.8rem}
+.ficha__cabezal h3{font-size:clamp(1.45rem,1.1rem + 1.4vw,2.05rem);margin-bottom:.6rem}
+.ficha__bajada{color:var(--gris);max-width:var(--medida);font-size:.98rem;margin:0}
+
+.aviso-ejemplo{
+  background:#FBEDE1;border:1px solid #E8C7A8;border-left:4px solid var(--naranja);
+  padding:.9rem 1.1rem;margin-bottom:1.8rem;font-size:.88rem;color:#7A3A0B;
+}
+.aviso-ejemplo strong{display:block;margin-bottom:.2rem}
+
+.bloque{margin-bottom:2.4rem}
+.bloque:last-child{margin-bottom:0}
+.bloque > .kicker{
+  padding-bottom:.5rem;border-bottom:1px solid var(--regla);margin-bottom:1.1rem;
+}
+
+.tecnica{display:grid;gap:.1rem 1.5rem;grid-template-columns:max-content 1fr;font-size:.9rem}
+.tecnica dt{color:var(--gris);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding-top:.35em}
+.tecnica dd{margin:0 0 .55rem}
+
+/* Afirmaciones */
+.afirmaciones{list-style:none;padding:0;margin:0}
+.afirmacion{
+  display:grid;gap:.3rem 1.2rem;
+  grid-template-columns:2.6rem minmax(0,1fr) minmax(0,15rem);
+  padding:1.3rem 0;border-bottom:1px solid var(--regla);
+}
+.afirmacion:first-child{border-top:1px solid var(--regla)}
+.afirmacion__num{
+  font-family:var(--serif);font-size:1.15rem;color:var(--verde);
+  font-variant-numeric:tabular-nums;padding-top:.1rem;
+}
+.afirmacion__cita{
+  font-family:var(--serif);font-size:1.08rem;line-height:1.5;margin:0 0 .55rem;
+  border-left:3px solid var(--verde);padding-left:.95rem;
+}
+.afirmacion__ubic{
+  font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--gris);
+  padding-left:calc(.95rem + 3px);
+}
+.afirmacion__fuente{font-size:.85rem;margin-top:.65rem;line-height:1.5}
+.afirmacion__fuente strong{
+  display:block;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--gris);font-weight:600;margin-bottom:.2rem;
+}
+
+/* Semáforo — el texto se escribe a mano en el HTML.
+   El CSS solo pinta. Ninguna etiqueta se calcula. */
+.etiqueta{
+  display:inline-flex;align-items:center;gap:.45em;
+  font-size:.76rem;font-weight:600;letter-spacing:.03em;
+  padding:.3em .8em;border-radius:999px;border:1px solid;white-space:nowrap;
+}
+.etiqueta::before{content:"";width:.5em;height:.5em;border-radius:50%;background:currentColor;flex:none}
+.etiqueta[data-etiqueta="verificado"]  {color:#1E4D42;background:#E8EFEA;border-color:#B9D0C4}
+.etiqueta[data-etiqueta="impreciso"]   {color:#8A3E0B;background:#FBEDE1;border-color:#E8C7A8}
+.etiqueta[data-etiqueta="falso"]       {color:#A32C1E;background:#F8E7E4;border-color:#E3BDB6}
+.etiqueta[data-etiqueta="sin-fuente"]  {color:#54544F;background:#EDEAE0;border-color:var(--regla)}
+.etiqueta[data-etiqueta="fuera-capa"]  {color:var(--gris);background:transparent;border-style:dashed;border-color:#C9C3B2}
+.etiqueta[data-etiqueta="fuera-capa"]::before{display:none}
+.etiqueta:not([data-etiqueta]){color:#A32C1E;background:#F8E7E4;border-color:#E3BDB6}
+
+.leyenda{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.2rem 0 0}
+
+/* Fuera de la capa fáctica */
+.nota-capa{
+  background:var(--crema);border:1px dashed #C9C3B2;padding:1rem 1.2rem;
+  font-size:.88rem;color:var(--gris);margin-bottom:1.2rem;
+}
+.no-factica{list-style:none;padding:0;margin:0}
+.no-factica li{padding:.95rem 0;border-bottom:1px solid var(--regla)}
+.no-factica p{
+  font-family:var(--serif);font-size:1.02rem;margin:0 0 .5rem;
+  border-left:3px solid #C9C3B2;padding-left:.95rem;
+}
+
+/* Capa argumental */
+.interpretacion{
+  background:var(--caja);border-left:4px solid var(--verde);
+  padding:1.4rem 1.6rem;
+}
+.interpretacion .marcador{
+  display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:#fff;background:var(--verde);
+  padding:.25em .7em;border-radius:2px;margin-bottom:.9rem;
+}
+.interpretacion p{font-size:.96rem;max-width:var(--medida)}
+
+/* Afiche */
+.afiche img{border:1px solid var(--regla);background:#fff;width:100%}
+.descarga{
+  display:inline-flex;align-items:center;gap:.45rem;margin-top:.9rem;
+  font-size:.85rem;font-weight:500;
+}
+
+/* Carrusel — funciona sin JavaScript */
+.carrusel{position:relative}
+.carrusel__pista{
+  display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;padding-bottom:.9rem;
+  scrollbar-width:thin;scrollbar-color:var(--regla) transparent;
+}
+.carrusel__lamina{
+  flex:0 0 min(78%,340px);scroll-snap-align:center;margin:0;
+}
+.carrusel__lamina img{border:1px solid var(--regla);background:#fff;width:100%}
+.carrusel__controles{
+  display:flex;align-items:center;gap:1rem;margin-top:.7rem;
+}
+.carrusel__boton{
+  font:inherit;font-size:1rem;line-height:1;cursor:pointer;
+  background:var(--crema);border:1px solid var(--regla);color:var(--tinta);
+  width:2.2rem;height:2.2rem;border-radius:50%;
+  display:grid;place-items:center;
+}
+.carrusel__boton:hover{border-color:var(--verde);color:var(--verde)}
+.carrusel__puntos{display:flex;gap:.4rem;flex:1}
+.carrusel__punto{
+  width:.5rem;height:.5rem;border-radius:50%;border:0;padding:0;cursor:pointer;
+  background:var(--regla);
+}
+.carrusel__punto[aria-current="true"]{background:var(--verde)}
+details.transcripcion{margin-top:1.1rem;font-size:.9rem}
+details.transcripcion summary{cursor:pointer;color:var(--verde);font-weight:500}
+details.transcripcion ol{margin:.8rem 0 0;padding-left:1.3rem;color:#3A3F45}
+details.transcripcion li{margin-bottom:.5rem}
+
+/* Firma */
+.firma{
+  border-top:1px solid var(--regla);padding-top:1.2rem;
+  font-size:.85rem;color:var(--gris);
+}
+.firma h4{
+  font-family:var(--sans);font-size:.7rem;letter-spacing:.08em;
+  text-transform:uppercase;margin:1.2rem 0 .4rem;color:var(--gris);
+}
+
+/* ---------- Pie ---------- */
+.sitio-footer{background:var(--marino);color:#D9DEE7;margin-top:clamp(3rem,6vw,5rem)}
+.sitio-footer .contenedor{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:1.5rem;padding:1.6rem 0;flex-wrap:wrap;
+}
+.sitio-footer .marca__texto{color:#fff}
+.sitio-footer .marca__texto em{color:#fff}
+.sitio-footer p{
+  margin:0;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;
+  color:#9AA6B8;
+}
+.sitio-footer a{color:#fff}
+
+/* ---------- Angosto ---------- */
+@media (max-width:760px){
+  .afirmacion{grid-template-columns:2.2rem minmax(0,1fr)}
+  .afirmacion__estado{grid-column:2}
+  .afirmacion__estado{margin-top:.5rem}
+  .tecnica{grid-template-columns:1fr;gap:0}
+  .tecnica dt{padding-top:.8em}
+  .sitio-header .contenedor{padding:.7rem 0}
+  .nav{gap:1rem;width:100%}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .carrusel__pista{scroll-behavior:auto}
+  *{transition:none!important}
+}
+
+/* ---------- Impresión ---------- */
+@media print{
+  .sitio-header,.sitio-footer,.nav,.carrusel__controles,.saltar{display:none}
+  body{background:#fff;font-size:10.5pt}
+  .ficha{border:0;padding:0;background:#fff}
+  .carrusel__pista{display:block;overflow:visible}
+  .carrusel__lamina{width:48%;display:inline-block;vertical-align:top}
+  details.transcripcion{display:block}
+  details.transcripcion[open] summary{display:none}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8.5pt;color:#555;word-break:break-all}
+}
+</style>
+</head>
+
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="sitio-header">
+  <div class="contenedor">
+    <a class="marca" href="#pagina-inicio">
+      <svg width="34" height="23" viewBox="0 0 76 52" role="img" aria-label="Fuente primaria">
+        <g fill="none" stroke="#1B2027" stroke-width="10.5" stroke-linejoin="miter">
+          <path d="M32 7 L11 26 L32 45"/>
+          <path d="M68 7 L47 26 L68 45"/>
+        </g>
+      </svg>
+      <span class="marca__texto">Fuente <em>primaria</em></span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#metodo">Método</a>
+      <a href="#pagina-fichas">Fichas</a>
+      <a href="#proyecto">Proyecto</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido">
+
+<div id="pagina-inicio">
+
+<!-- ======================================================================
+     PORTADA
+     ====================================================================== -->
+<section class="portada" id="portada">
+  <div class="contenedor">
+    <h1>Analizamos lo que se dijo, <em>no lo que quisimos escuchar.</em></h1>
+
+    <div class="prosa">
+      <p>Fuente primaria es un proyecto independiente que analiza discurso público
+      de personas en función pública o candidatas, documentos oficiales y
+      normativa, y programas partidarios.</p>
+
+      <p>No decidimos quién tiene razón: mostramos qué dice el texto, con qué
+      palabras lo dice, y qué de eso se puede contrastar contra la fuente. Cada
+      afirmación verificable se aísla, se cita textual con su minuto o su número
+      de artículo, y se busca la fuente primaria que la sostiene o la desmiente.</p>
+
+      <p>Lo que es opinión, pronóstico o hipótesis queda marcado como tal y no
+      recibe veredicto: forzarle uno sería inventar un hecho donde hay una postura.</p>
+
+      <p>El código y el registro completo de cada análisis se publican junto con la
+      ficha. Se puede correr de nuevo y llegar a los mismos números.</p>
+    </div>
+
+    <div class="pilares">
+      <div class="pilar">
+        <h3>Se separa en pasadas</h3>
+        <p>Extracción, clasificación, fuente e interpretación se hacen por
+        separado. Mezcladas, la impresión general contamina el veredicto sobre
+        cada hecho puntual.</p>
+      </div>
+      <div class="pilar">
+        <h3>La cita no se edita</h3>
+        <p>Los cortes van con corchetes y siempre con enlace completo al original.
+        Nunca se parafrasea una cita para que entre en el diseño.</p>
+      </div>
+      <div class="pilar">
+        <h3>La etiqueta la firma una persona</h3>
+        <p>El semáforo de cada afirmación lo cierra alguien con nombre, no un
+        modelo. La ausencia de fuente tiene su propia etiqueta y no es falsedad.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2.6rem">
+      <a class="boton" href="#pagina-fichas">Ver las fichas publicadas &rarr;</a>
+    </p>
+  </div>
+</section>
+
+<!-- ======================================================================
+     MÉTODO
+     ====================================================================== -->
+<section class="seccion" id="metodo">
+  <div class="contenedor">
+    <p class="kicker">Cómo se trabaja</p>
+    <h2 class="seccion__titulo">Por qué en pasadas separadas</h2>
+
+    <div class="prosa" style="margin-bottom:2.6rem">
+      <p>El análisis se hace en pasadas y nunca de una sola vez. Mezcladas, arman
+      una narrativa coherente y la impresión general del texto contamina el
+      veredicto sobre cada hecho puntual: si el discurso «suena» sólido, cada dato
+      suelto empieza a parecer sólido. Separadas, cada afirmación se evalúa contra
+      su fuente y contra nada más.</p>
+    </div>
+
+    <div class="pasada">
+      <h3><span class="num">01</span>Extracción</h3>
+      <p>Se aíslan las afirmaciones verificables del texto, citadas textualmente,
+      numeradas, cada una con su minuto o su número de artículo. Sin evaluar, sin
+      interpretar, sin comentar.</p>
+    </div>
+
+    <div class="pasada">
+      <h3><span class="num">02</span>Clasificación</h3>
+      <p>Cada afirmación se marca como verificable, valorativa, predictiva o
+      contrafáctica. Las tres últimas salen de la capa fáctica y no reciben
+      etiqueta de semáforo. Una predicción no es falsa hasta que no se cumple, y
+      una opinión no es falsa nunca.</p>
+    </div>
+
+    <div class="pasada">
+      <h3><span class="num">03</span>Fuente</h3>
+      <p>Una afirmación por vez. Se traen las fuentes primarias candidatas con
+      enlace y se dice qué dice cada una. Si no aparece fuente, se publica dónde se
+      buscó. <strong>Ausencia de fuente no es falsedad</strong>, y tiene su propia
+      etiqueta.</p>
+    </div>
+
+    <div class="pasada">
+      <h3><span class="num">04</span>Argumental</h3>
+      <p>Sobre el texto completo y sin mirar los resultados de la pasada anterior:
+      tesis central, tipo de argumento, presuposiciones, ausencias del encuadre.
+      Todo esto es interpretación y va marcado como interpretación.</p>
+    </div>
+
+    <div class="pasada">
+      <h3><span class="num">05</span>Ficha y carrusel</h3>
+      <p>Solo a partir de material ya aprobado. El carrusel no puede contener
+      ninguna conclusión que no esté en la ficha.</p>
+    </div>
+
+    <h3 style="margin-top:3rem">Qué capa según el material</h3>
+    <table class="tabla-simple">
+      <thead>
+        <tr><th scope="col">Material</th><th scope="col">Capa</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Declaración en prensa o redes</td>
+          <td>Fáctica y argumental</td>
+        </tr>
+        <tr>
+          <td>Documento oficial o normativa</td>
+          <td>Estructural y léxica: articulado contra exposición de motivos,
+              densidad deóntica, diff entre versiones</td>
+        </tr>
+        <tr>
+          <td>Programa o plataforma partidaria</td>
+          <td>Cuantitativa comparada</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="prosa" style="font-size:.92rem;color:var(--gris)">No se cambia de
+    enfoque porque otro daría un hallazgo más llamativo.</p>
+
+    <h3 style="margin-top:3rem">Lo que no hacemos</h3>
+    <ul class="lista-no" style="margin-top:1.2rem">
+      <li>No atribuimos intención, creencia ni estado mental. Escribimos «el texto
+      no aporta evidencia para X», nunca «sabe que es falso» ni «busca instalar».</li>
+      <li>No editamos citas. Los cortes van con <code>[...]</code> y siempre con
+      enlace completo al original.</li>
+      <li>No analizamos personas privadas ni entornos familiares de figuras
+      públicas.</li>
+      <li>No redactamos material persuasivo a favor ni en contra de nadie.</li>
+      <li>No analizamos a un actor sin cubrir a los demás en la misma ventana
+      temporal.</li>
+      <li>La etiqueta final del semáforo la firma una persona. No la calcula un
+      modelo.</li>
+    </ul>
+
+    <h3 style="margin-top:3rem">El semáforo</h3>
+    <p class="prosa" style="margin-top:.8rem;font-size:.95rem">Cinco estados. El
+    color nunca va solo: cada etiqueta lleva su texto.</p>
+    <div class="leyenda">
+      <span class="etiqueta" data-etiqueta="verificado">Verificado</span>
+      <span class="etiqueta" data-etiqueta="impreciso">Impreciso</span>
+      <span class="etiqueta" data-etiqueta="falso">Falso</span>
+      <span class="etiqueta" data-etiqueta="sin-fuente">Sin fuente suficiente</span>
+      <span class="etiqueta" data-etiqueta="fuera-capa">Fuera de la capa fáctica</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     PROYECTO
+     ====================================================================== -->
+<section class="seccion" id="proyecto">
+  <div class="contenedor">
+    <p class="kicker">Quiénes</p>
+    <h2 class="seccion__titulo">El proyecto</h2>
+    <div class="prosa">
+      <p>Fuente primaria es un proyecto independiente. No responde a ningún partido,
+      medio ni organización, y no acepta financiamiento de actores que puedan ser
+      objeto de análisis.</p>
+
+      <p>El análisis léxico y cuantitativo se hace en R, con
+      <a href="https://quanteda.io">quanteda</a> y
+      <a href="https://www.structuraltopicmodel.com">stm</a>. El código y el
+      registro completo de consola de cada caso se publican junto con la ficha:
+      cualquiera puede correrlo y llegar a los mismos números.</p>
+
+      <p>Si encontrás un error en una ficha, escribinos: se corrige, se fecha y
+      queda registrado en la propia ficha. Un sitio que revisa a otros muestra su
+      propio historial de correcciones.</p>
+
+      <p><strong>Contacto:</strong>
+      <a href="mailto:Fuente.primaria.uruguay@gmail.com">Fuente.primaria.uruguay@gmail.com</a><br>
+      <a href="#">Repositorio y código</a></p>
+    </div>
+  </div>
+</section>
+
+</div><!-- /pagina-inicio -->
+
+
+<!-- ======================================================================
+     VISTA DE FICHAS — se muestra solo al entrar por el menú «Fichas».
+     ====================================================================== -->
+<div id="pagina-fichas">
+
+<!-- ======================================================================
+     FICHAS
+
+     ESTA ES LA PÁGINA DE FICHAS. PARA AGREGAR UNA FICHA NUEVA:
+     copiá todo el bloque <article class="ficha"> … </article> de abajo,
+     pegalo arriba del anterior (las más nuevas van primero) y reemplazá
+     el contenido. Las imágenes van en el mismo repositorio; en el src
+     poné la ruta relativa, por ejemplo: contenido/2026-09-14-slug/afiche.png
+
+     Nombres de archivo SIEMPRE en minúscula, sin espacios ni acentos:
+     GitHub Pages distingue mayúsculas y macOS no, y eso da 404 al publicar.
+     ====================================================================== -->
+<section class="seccion" style="border-top:0;padding-top:clamp(2.5rem,5vw,4rem)">
+  <div class="contenedor">
+    <p class="kicker">Casos analizados</p>
+    <h1 class="seccion__titulo" style="font-size:clamp(2rem,1.5rem + 2vw,3rem)">Fichas</h1>
+    <p class="prosa" style="margin-bottom:2.6rem">Cada ficha aísla las afirmaciones
+    verificables del texto analizado, las cita textualmente con su ubicación y busca
+    la fuente primaria de cada una. La interpretación va aparte y marcada como tal.
+    <a href="#metodo">Cómo se trabaja</a>.</p>
+
+    <article class="ficha">
+
+      <div class="aviso-ejemplo">
+        <strong>Ficha de ejemplo — borrar antes de publicar</strong>
+        Todos los datos de abajo son ficticios y están puestos únicamente para
+        mostrar la estructura. No corresponden a ninguna declaración real.
+      </div>
+
+      <header class="ficha__cabezal">
+        <p class="kicker">Ficha n.º <span class="num">001</span> · 14 de setiembre de 2026 · Declaración</p>
+        <h3>Título de la ficha, en una línea que no anticipe el veredicto</h3>
+        <p class="ficha__bajada">Bajada de una o dos líneas que dice qué se
+        analizó y con qué método. Sin adjetivos sobre el actor.</p>
+      </header>
+
+      <!-- ---------- Ficha técnica ---------- -->
+      <div class="bloque">
+        <p class="kicker">La fuente</p>
+        <dl class="tecnica">
+          <dt>Actor</dt>       <dd>[Nombre] — [cargo o condición]</dd>
+          <dt>Soporte</dt>     <dd>[Acto, programa, publicación]</dd>
+          <dt>Fecha</dt>       <dd>[dd de mes de aaaa]</dd>
+          <dt>Extensión</dt>   <dd>[duración o cantidad de palabras]</dd>
+          <dt>Original</dt>    <dd><a href="#">Enlace al registro original</a></dd>
+          <dt>Transcripción</dt><dd><a href="#">Texto completo usado en el análisis</a></dd>
+          <dt>Consultado</dt>  <dd>[dd/mm/aaaa]</dd>
+        </dl>
+      </div>
+
+      <!-- ---------- Afirmaciones verificables ---------- -->
+      <div class="bloque">
+        <p class="kicker">Afirmaciones verificables</p>
+
+        <ol class="afirmaciones">
+
+          <li class="afirmacion">
+            <div class="afirmacion__num">01</div>
+            <div>
+              <p class="afirmacion__cita">«Cita textual exacta de la afirmación,
+              sin editar. Si hay un corte va marcado [...] y nada más.»</p>
+              <p class="afirmacion__ubic">Minuto 14:32</p>
+            </div>
+            <div class="afirmacion__estado">
+              <span class="etiqueta" data-etiqueta="verificado">Verificado</span>
+              <p class="afirmacion__fuente">
+                <strong>Fuente</strong>
+                <a href="#">Nombre del organismo o publicación, dato preciso</a> —
+                una línea diciendo qué dice esa fuente.
+              </p>
+            </div>
+          </li>
+
+          <li class="afirmacion">
+            <div class="afirmacion__num">02</div>
+            <div>
+              <p class="afirmacion__cita">«Segunda afirmación. El hecho existe,
+              pero la cifra que se menciona no coincide con la del registro
+              oficial.»</p>
+              <p class="afirmacion__ubic">Minuto 21:05</p>
+            </div>
+            <div class="afirmacion__estado">
+              <span class="etiqueta" data-etiqueta="impreciso">Impreciso</span>
+              <p class="afirmacion__fuente">
+                <strong>Fuente</strong>
+                <a href="#">Serie oficial, cuadro 4</a> — el valor publicado es
+                otro; se detalla la diferencia.
+              </p>
+            </div>
+          </li>
+
+          <li class="afirmacion">
+            <div class="afirmacion__num">03</div>
+            <div>
+              <p class="afirmacion__cita">«Tercera afirmación, para la que se
+              buscó fuente y no aparece ningún registro público.»</p>
+              <p class="afirmacion__ubic">Minuto 33:40</p>
+            </div>
+            <div class="afirmacion__estado">
+              <span class="etiqueta" data-etiqueta="sin-fuente">Sin fuente suficiente</span>
+              <p class="afirmacion__fuente">
+                <strong>Dónde se buscó</strong>
+                Se revisaron [repositorio A], [repositorio B] y los pedidos de
+                acceso a la información pública vigentes. No hay registro
+                publicado. Esto no la vuelve falsa.
+              </p>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+
+      <!-- ---------- Fuera de la capa fáctica ---------- -->
+      <div class="bloque">
+        <p class="kicker">Fuera de la capa fáctica</p>
+        <p class="nota-capa">Estas afirmaciones no reciben veredicto. No son
+        verificables contra una fuente: son postura, pronóstico o hipótesis.</p>
+
+        <ul class="no-factica">
+          <li>
+            <p>«Cita de una afirmación valorativa.»</p>
+            <span class="etiqueta" data-etiqueta="fuera-capa">Valorativa</span>
+          </li>
+          <li>
+            <p>«Cita de una afirmación sobre lo que va a pasar el año que viene.»</p>
+            <span class="etiqueta" data-etiqueta="fuera-capa">Predictiva</span>
+          </li>
+          <li>
+            <p>«Cita sobre lo que habría pasado si se hubiera hecho otra cosa.»</p>
+            <span class="etiqueta" data-etiqueta="fuera-capa">Contrafáctica</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ---------- Capa argumental ---------- -->
+      <div class="bloque">
+        <p class="kicker">Capa argumental</p>
+        <div class="interpretacion">
+          <span class="marcador">Interpretación</span>
+          <p><strong>Tesis central.</strong> Una o dos oraciones sobre qué sostiene
+          el texto en conjunto.</p>
+          <p><strong>Tipo de argumento.</strong> Cómo se sostiene: por autoridad,
+          por analogía, por experiencia propia, por contraste con un adversario.</p>
+          <p><strong>Presuposiciones.</strong> Qué da por sentado el texto sin
+          argumentarlo.</p>
+          <p><strong>Ausencias del encuadre.</strong> Qué queda afuera del marco
+          que el texto propone.</p>
+        </div>
+      </div>
+
+      <!-- ---------- Afiche ---------- -->
+      <div class="bloque afiche">
+        <p class="kicker">Afiche</p>
+        <img src="contenido/ejemplo/afiche.png"
+             alt="Afiche de la ficha: descripción de lo que muestra."
+             loading="lazy" width="1600" height="2263">
+        <a class="descarga" href="contenido/ejemplo/afiche.pdf">
+          Ver en tamaño completo (PDF, A1)
+        </a>
+      </div>
+
+      <!-- ---------- Carrusel ---------- -->
+      <div class="bloque">
+        <p class="kicker">Carrusel</p>
+
+        <div class="carrusel" data-carrusel>
+          <div class="carrusel__pista" tabindex="0" role="group"
+               aria-label="Láminas del carrusel, desplazables">
+            <figure class="carrusel__lamina">
+              <img src="contenido/ejemplo/carrusel/01.png" alt="Lámina 1: texto de la lámina." loading="lazy">
+            </figure>
+            <figure class="carrusel__lamina">
+              <img src="contenido/ejemplo/carrusel/02.png" alt="Lámina 2: texto de la lámina." loading="lazy">
+            </figure>
+            <figure class="carrusel__lamina">
+              <img src="contenido/ejemplo/carrusel/03.png" alt="Lámina 3: texto de la lámina." loading="lazy">
+            </figure>
+            <figure class="carrusel__lamina">
+              <img src="contenido/ejemplo/carrusel/04.png" alt="Lámina 4: texto de la lámina." loading="lazy">
+            </figure>
+          </div>
+        </div>
+
+        <details class="transcripcion">
+          <summary>Texto de las láminas</summary>
+          <ol>
+            <li>Texto completo de la lámina 1.</li>
+            <li>Texto completo de la lámina 2.</li>
+            <li>Texto completo de la lámina 3.</li>
+            <li>Texto completo de la lámina 4.</li>
+          </ol>
+        </details>
+      </div>
+
+      <!-- ---------- Firma y correcciones ---------- -->
+      <footer class="firma">
+        <p>Ficha cerrada por [nombre] el [dd/mm/aaaa].</p>
+        <h4>Correcciones</h4>
+        <p>No hubo correcciones en esta ficha.</p>
+      </footer>
+
+    </article>
+    <!-- FIN DE LA FICHA — copiá desde <article class="ficha"> hasta acá -->
+
+  </div>
+</section>
+
+  <div class="contenedor">
+    <p style="margin-top:1rem"><a href="#pagina-inicio">&larr; Volver a la portada</a></p>
+  </div>
+
+</div><!-- /pagina-fichas -->
+
+</main>
+
+<footer class="sitio-footer">
+  <div class="contenedor">
+    <span class="marca">
+      <svg width="30" height="20" viewBox="0 0 76 52" role="img" aria-label="Fuente primaria">
+        <g fill="none" stroke="#ffffff" stroke-width="10.5" stroke-linejoin="miter">
+          <path d="M32 7 L11 26 L32 45"/>
+          <path d="M68 7 L47 26 L68 45"/>
+        </g>
+      </svg>
+      <span class="marca__texto">Fuente <em>primaria</em></span>
+    </span>
+    <p>Análisis de discurso público ·
+      <a href="mailto:Fuente.primaria.uruguay@gmail.com">Fuente.primaria.uruguay@gmail.com</a></p>
+  </div>
+</footer>
+
+<script>
+/* Carrusel. Sin esto la tira sigue funcionando: se desplaza sola con
+   scroll-snap y con el teclado. El JS solo agrega flechas y puntos. */
+document.querySelectorAll('[data-carrusel]').forEach(function (car) {
+  var pista = car.querySelector('.carrusel__pista');
+  var laminas = Array.prototype.slice.call(car.querySelectorAll('.carrusel__lamina'));
+  if (laminas.length < 2) return;
+
+  var controles = document.createElement('div');
+  controles.className = 'carrusel__controles';
+
+  var anterior = document.createElement('button');
+  anterior.className = 'carrusel__boton';
+  anterior.type = 'button';
+  anterior.setAttribute('aria-label', 'Lámina anterior');
+  anterior.textContent = '‹';
+
+  var siguiente = document.createElement('button');
+  siguiente.className = 'carrusel__boton';
+  siguiente.type = 'button';
+  siguiente.setAttribute('aria-label', 'Lámina siguiente');
+  siguiente.textContent = '›';
+
+  var puntos = document.createElement('div');
+  puntos.className = 'carrusel__puntos';
+
+  laminas.forEach(function (lamina, i) {
+    var punto = document.createElement('button');
+    punto.className = 'carrusel__punto';
+    punto.type = 'button';
+    punto.setAttribute('aria-label', 'Ir a la lámina ' + (i + 1));
+    punto.addEventListener('click', function () { ir(i); });
+    puntos.appendChild(punto);
+  });
+
+  controles.appendChild(anterior);
+  controles.appendChild(puntos);
+  controles.appendChild(siguiente);
+  car.appendChild(controles);
+
+  var actual = 0;
+
+  function ir(i) {
+    actual = Math.max(0, Math.min(laminas.length - 1, i));
+    pista.scrollTo({ left: laminas[actual].offsetLeft - pista.offsetLeft, behavior: 'smooth' });
+    marcar();
+  }
+
+  function marcar() {
+    Array.prototype.forEach.call(puntos.children, function (p, i) {
+      p.setAttribute('aria-current', i === actual ? 'true' : 'false');
+    });
+    anterior.disabled = actual === 0;
+    siguiente.disabled = actual === laminas.length - 1;
+  }
+
+  anterior.addEventListener('click', function () { ir(actual - 1); });
+  siguiente.addEventListener('click', function () { ir(actual + 1); });
+
+  pista.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); ir(actual + 1); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); ir(actual - 1); }
+  });
+
+  var pendiente;
+  pista.addEventListener('scroll', function () {
+    clearTimeout(pendiente);
+    pendiente = setTimeout(function () {
+      var centro = pista.scrollLeft + pista.clientWidth / 2;
+      var cerca = 0, min = Infinity;
+      laminas.forEach(function (l, i) {
+        var d = Math.abs((l.offsetLeft - pista.offsetLeft) + l.offsetWidth / 2 - centro);
+        if (d < min) { min = d; cerca = i; }
+      });
+      actual = cerca;
+      marcar();
+    }, 90);
+  }, { passive: true });
+
+  marcar();
+});
+</script>
+
+</body>
+</html>
