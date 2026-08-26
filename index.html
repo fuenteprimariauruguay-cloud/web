@@ -254,6 +254,69 @@ body:has(#pagina-fichas:target) .nav a[href="#pagina-fichas"]{
 
 .leyenda{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.2rem 0 0}
 
+.analisis{border:1px solid var(--regla);background:var(--crema);margin-top:2.4rem}
+.analisis > summary{
+  cursor:pointer;list-style:none;padding:1.05rem 1.35rem;
+  font-size:.78rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--verde);display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+.analisis > summary::-webkit-details-marker{display:none}
+.analisis > summary::after{content:"+";font-size:1.35rem;line-height:1;font-weight:400}
+.analisis[open] > summary::after{content:"\2212"}
+.analisis[open] > summary{border-bottom:1px solid var(--regla)}
+.analisis > summary:hover{color:var(--tinta)}
+.analisis__cuerpo{padding:2rem 1.35rem}
+.analisis__cuerpo > .bloque:last-of-type{margin-bottom:0}
+
+.ficha__meta{display:flex;flex-wrap:wrap;gap:.4rem 2rem;margin-top:1.1rem;font-size:.9rem}
+.ficha__meta div{display:flex;gap:.5rem;align-items:baseline}
+.ficha__meta dt{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gris)}
+.ficha__meta dd{margin:0;font-weight:500}
+
+.carrusel__lamina{flex:0 0 min(84%,400px)}
+
+.capa{
+  display:inline-block;font-size:.66rem;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:#fff;background:var(--teal);
+  padding:.22em .62em;border-radius:2px;
+}
+
+.datos{
+  display:grid;gap:1px;background:var(--regla);border:1px solid var(--regla);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));
+}
+.dato{background:var(--papel);padding:1rem 1.1rem}
+.dato b{
+  display:block;font-family:var(--serif);font-size:1.75rem;line-height:1;
+  color:var(--verde);font-variant-numeric:tabular-nums;margin-bottom:.35rem;
+}
+.dato span{font-size:.77rem;color:var(--gris);line-height:1.35;display:block}
+
+.hallazgo{border-top:1px solid var(--regla);padding:1.5rem 0}
+.hallazgo:first-of-type{border-top:0;padding-top:0}
+.hallazgo .et{
+  display:block;font-size:.68rem;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--naranja);margin-bottom:.4rem;
+}
+.hallazgo h4{font-family:var(--serif);font-size:1.15rem;font-weight:600;margin:0 0 .55rem}
+.hallazgo p{font-size:.93rem;max-width:var(--medida)}
+.hallazgo .tabla-simple{margin:.9rem 0 0;max-width:34rem}
+.hallazgo .tabla-simple td:last-child,
+.hallazgo .tabla-simple th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+
+.citas{
+  display:grid;gap:1.5rem;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));
+}
+.citas blockquote{
+  margin:0;font-family:var(--serif);font-size:1.02rem;line-height:1.5;
+  border-left:3px solid var(--verde);padding-left:.95rem;
+}
+.citas cite{
+  display:block;font-family:var(--sans);font-style:normal;font-size:.7rem;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--gris);margin-top:.55rem;
+}
+
 /* Fuera de la capa fáctica */
 .nota-capa{
   background:var(--crema);border:1px dashed #C9C3B2;padding:1rem 1.2rem;
@@ -363,6 +426,8 @@ details.transcripcion li{margin-bottom:.5rem}
   body{background:#fff;font-size:10.5pt}
   .ficha{border:0;padding:0;background:#fff}
   .carrusel__pista{display:block;overflow:visible}
+  .analisis__cuerpo{display:block!important}
+  .analisis > summary::after{content:""}
   .carrusel__lamina{width:48%;display:inline-block;vertical-align:top}
   details.transcripcion{display:block}
   details.transcripcion[open] summary{display:none}
@@ -610,183 +675,280 @@ details.transcripcion li{margin-bottom:.5rem}
 
     <article class="ficha">
 
-      <div class="aviso-ejemplo">
-        <strong>Ficha de ejemplo — borrar antes de publicar</strong>
-        Todos los datos de abajo son ficticios y están puestos únicamente para
-        mostrar la estructura. No corresponden a ninguna declaración real.
-      </div>
-
       <header class="ficha__cabezal">
-        <p class="kicker">Ficha n.º <span class="num">001</span> · 14 de setiembre de 2026 · Declaración</p>
-        <h3>Título de la ficha, en una línea que no anticipe el veredicto</h3>
-        <p class="ficha__bajada">Bajada de una o dos líneas que dice qué se
-        analizó y con qué método. Sin adjetivos sobre el actor.</p>
+        <p class="kicker">Ficha n.º <span class="num">001</span> ·
+          <span class="capa">Capa léxica</span></p>
+        <h3>Discurso por el 190.º aniversario del Partido Nacional</h3>
+        <dl class="ficha__meta">
+          <div><dt>Actor</dt><dd>Luis Lacalle Pou</dd></div>
+          <div><dt>Fecha</dt><dd>[completar]</dd></div>
+          <div><dt>Análisis</dt><dd>26 de agosto de 2026</dd></div>
+        </dl>
       </header>
 
-      <!-- ---------- Ficha técnica ---------- -->
+      <p class="nota-capa">Análisis léxico y de tono: describe <strong>cómo está
+      dicho</strong> el discurso, no verifica sus afirmaciones. La capa fáctica se
+      publica aparte.</p>
+
+      <!-- ---------- Carrusel ---------- -->
       <div class="bloque">
-        <p class="kicker">La fuente</p>
-        <dl class="tecnica">
-          <dt>Actor</dt>       <dd>[Nombre] — [cargo o condición]</dd>
-          <dt>Soporte</dt>     <dd>[Acto, programa, publicación]</dd>
-          <dt>Fecha</dt>       <dd>[dd de mes de aaaa]</dd>
-          <dt>Extensión</dt>   <dd>[duración o cantidad de palabras]</dd>
-          <dt>Original</dt>    <dd><a href="#">Enlace al registro original</a></dd>
-          <dt>Transcripción</dt><dd><a href="#">Texto completo usado en el análisis</a></dd>
-          <dt>Consultado</dt>  <dd>[dd/mm/aaaa]</dd>
-        </dl>
-      </div>
-
-      <!-- ---------- Afirmaciones verificables ---------- -->
-      <div class="bloque">
-        <p class="kicker">Afirmaciones verificables</p>
-
-        <ol class="afirmaciones">
-
-          <li class="afirmacion">
-            <div class="afirmacion__num">01</div>
-            <div>
-              <p class="afirmacion__cita">«Cita textual exacta de la afirmación,
-              sin editar. Si hay un corte va marcado [...] y nada más.»</p>
-              <p class="afirmacion__ubic">Minuto 14:32</p>
-            </div>
-            <div class="afirmacion__estado">
-              <span class="etiqueta" data-etiqueta="verificado">Verificado</span>
-              <p class="afirmacion__fuente">
-                <strong>Fuente</strong>
-                <a href="#">Nombre del organismo o publicación, dato preciso</a> —
-                una línea diciendo qué dice esa fuente.
-              </p>
-            </div>
-          </li>
-
-          <li class="afirmacion">
-            <div class="afirmacion__num">02</div>
-            <div>
-              <p class="afirmacion__cita">«Segunda afirmación. El hecho existe,
-              pero la cifra que se menciona no coincide con la del registro
-              oficial.»</p>
-              <p class="afirmacion__ubic">Minuto 21:05</p>
-            </div>
-            <div class="afirmacion__estado">
-              <span class="etiqueta" data-etiqueta="impreciso">Impreciso</span>
-              <p class="afirmacion__fuente">
-                <strong>Fuente</strong>
-                <a href="#">Serie oficial, cuadro 4</a> — el valor publicado es
-                otro; se detalla la diferencia.
-              </p>
-            </div>
-          </li>
-
-          <li class="afirmacion">
-            <div class="afirmacion__num">03</div>
-            <div>
-              <p class="afirmacion__cita">«Tercera afirmación, para la que se
-              buscó fuente y no aparece ningún registro público.»</p>
-              <p class="afirmacion__ubic">Minuto 33:40</p>
-            </div>
-            <div class="afirmacion__estado">
-              <span class="etiqueta" data-etiqueta="sin-fuente">Sin fuente suficiente</span>
-              <p class="afirmacion__fuente">
-                <strong>Dónde se buscó</strong>
-                Se revisaron [repositorio A], [repositorio B] y los pedidos de
-                acceso a la información pública vigentes. No hay registro
-                publicado. Esto no la vuelve falsa.
-              </p>
-            </div>
-          </li>
-
-        </ol>
-      </div>
-
-      <!-- ---------- Fuera de la capa fáctica ---------- -->
-      <div class="bloque">
-        <p class="kicker">Fuera de la capa fáctica</p>
-        <p class="nota-capa">Estas afirmaciones no reciben veredicto. No son
-        verificables contra una fuente: son postura, pronóstico o hipótesis.</p>
-
-        <ul class="no-factica">
-          <li>
-            <p>«Cita de una afirmación valorativa.»</p>
-            <span class="etiqueta" data-etiqueta="fuera-capa">Valorativa</span>
-          </li>
-          <li>
-            <p>«Cita de una afirmación sobre lo que va a pasar el año que viene.»</p>
-            <span class="etiqueta" data-etiqueta="fuera-capa">Predictiva</span>
-          </li>
-          <li>
-            <p>«Cita sobre lo que habría pasado si se hubiera hecho otra cosa.»</p>
-            <span class="etiqueta" data-etiqueta="fuera-capa">Contrafáctica</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- ---------- Capa argumental ---------- -->
-      <div class="bloque">
-        <p class="kicker">Capa argumental</p>
-        <div class="interpretacion">
-          <span class="marcador">Interpretación</span>
-          <p><strong>Tesis central.</strong> Una o dos oraciones sobre qué sostiene
-          el texto en conjunto.</p>
-          <p><strong>Tipo de argumento.</strong> Cómo se sostiene: por autoridad,
-          por analogía, por experiencia propia, por contraste con un adversario.</p>
-          <p><strong>Presuposiciones.</strong> Qué da por sentado el texto sin
-          argumentarlo.</p>
-          <p><strong>Ausencias del encuadre.</strong> Qué queda afuera del marco
-          que el texto propone.</p>
+        <p class="kicker">Carrusel</p>
+        <div class="carrusel" data-carrusel>
+          <div class="carrusel__pista" tabindex="0" role="group"
+               aria-label="Láminas del carrusel, desplazables">
+            <figure class="carrusel__lamina"><img src="posts/2026-08-25-lacalle-pou/carrusel/01.png" alt="Lámina 1" loading="lazy"></figure>
+            <figure class="carrusel__lamina"><img src="posts/2026-08-25-lacalle-pou/carrusel/02.png" alt="Lámina 2" loading="lazy"></figure>
+            <figure class="carrusel__lamina"><img src="posts/2026-08-25-lacalle-pou/carrusel/03.png" alt="Lámina 3" loading="lazy"></figure>
+            <figure class="carrusel__lamina"><img src="posts/2026-08-25-lacalle-pou/carrusel/04.png" alt="Lámina 4" loading="lazy"></figure>
+            <figure class="carrusel__lamina"><img src="posts/2026-08-25-lacalle-pou/carrusel/05.png" alt="Lámina 5" loading="lazy"></figure>
+            <figure class="carrusel__lamina"><img src="posts/2026-08-25-lacalle-pou/carrusel/06.png" alt="Lámina 6" loading="lazy"></figure>
+            <figure class="carrusel__lamina"><img src="posts/2026-08-25-lacalle-pou/carrusel/07.png" alt="Lámina 7" loading="lazy"></figure>
+          </div>
         </div>
+        <details class="transcripcion">
+          <summary>Texto de las láminas</summary>
+          <ol>
+            <li>[Texto de la lámina 1 — completar]</li>
+            <li>[Texto de la lámina 2 — completar]</li>
+            <li>[Texto de la lámina 3 — completar]</li>
+            <li>[Texto de la lámina 4 — completar]</li>
+            <li>[Texto de la lámina 5 — completar]</li>
+            <li>[Texto de la lámina 6 — completar]</li>
+            <li>[Texto de la lámina 7 — completar]</li>
+          </ol>
+        </details>
       </div>
 
       <!-- ---------- Afiche ---------- -->
       <div class="bloque afiche">
         <p class="kicker">Afiche</p>
-        <img src="contenido/ejemplo/afiche.png"
-             alt="Afiche de la ficha: descripción de lo que muestra."
-             loading="lazy" width="1600" height="2263">
-        <a class="descarga" href="contenido/ejemplo/afiche.pdf">
-          Ver en tamaño completo (PDF, A1)
+        <img src="posts/2026-08-25-lacalle-pou/afiche/afiche.jpg"
+             alt="Afiche del análisis léxico del discurso." loading="lazy">
+        <a class="descarga" href="posts/2026-08-25-lacalle-pou/afiche/afiche.pdf">
+          Ver en tamaño completo (PDF)
         </a>
       </div>
 
-      <!-- ---------- Carrusel ---------- -->
-      <div class="bloque">
-        <p class="kicker">Carrusel</p>
+      <details class="analisis">
+        <summary>El análisis completo</summary>
+        <div class="analisis__cuerpo">
 
-        <div class="carrusel" data-carrusel>
-          <div class="carrusel__pista" tabindex="0" role="group"
-               aria-label="Láminas del carrusel, desplazables">
-            <figure class="carrusel__lamina">
-              <img src="contenido/ejemplo/carrusel/01.png" alt="Lámina 1: texto de la lámina." loading="lazy">
-            </figure>
-            <figure class="carrusel__lamina">
-              <img src="contenido/ejemplo/carrusel/02.png" alt="Lámina 2: texto de la lámina." loading="lazy">
-            </figure>
-            <figure class="carrusel__lamina">
-              <img src="contenido/ejemplo/carrusel/03.png" alt="Lámina 3: texto de la lámina." loading="lazy">
-            </figure>
-            <figure class="carrusel__lamina">
-              <img src="contenido/ejemplo/carrusel/04.png" alt="Lámina 4: texto de la lámina." loading="lazy">
-            </figure>
+        <!-- ---------- La fuente ---------- -->
+        <div class="bloque">
+          <p class="kicker">La fuente</p>
+          <dl class="tecnica">
+            <dt>Actor</dt>        <dd>Luis Lacalle Pou — ex presidente de la República</dd>
+            <dt>Soporte</dt>      <dd>[Acto del Partido Nacional — completar]</dd>
+            <dt>Fecha</dt>        <dd>[Completar]</dd>
+            <dt>Extensión</dt>    <dd>16.415 caracteres · 2.954 palabras</dd>
+            <dt>Original</dt>     <dd>[Enlace al registro original — completar]</dd>
+            <dt>Transcripción</dt><dd>[Enlace al texto usado en el análisis — completar]</dd>
+            <dt>Análisis</dt>     <dd>Corrida del 26 de agosto de 2026 · semilla 2026 · R, quanteda, stm, syuzhet</dd>
+          </dl>
+        </div>
+
+        <!-- ---------- Datos ---------- -->
+        <div class="bloque">
+          <p class="kicker">El corpus</p>
+          <div class="datos">
+            <div class="dato"><b>2.954</b><span>palabras</span></div>
+            <div class="dato"><b>92</b><span>párrafos (mediana 28 palabras)</span></div>
+            <div class="dato"><b>190</b><span>términos tras el recorte</span></div>
+            <div class="dato"><b>30</b><span>marcas escénicas</span></div>
+            <div class="dato"><b>44,6%</b><span>en la categoría residual</span></div>
+          </div>
+          <p style="font-size:.88rem;color:var(--gris);margin-top:1rem;max-width:var(--medida)">
+          Casi la mitad del discurso queda fuera de los seis temas del diccionario.
+          El diccionario no cubre todo el texto, y eso se reporta.</p>
+        </div>
+
+        <!-- ---------- Método ---------- -->
+        <div class="bloque">
+          <p class="kicker">Método</p>
+          <ol class="tabla-simple" style="list-style:none;padding:0;display:block;font-size:.93rem;max-width:var(--medida)">
+            <li style="padding:.6rem 0;border-bottom:1px solid var(--regla)">
+              <span class="num">01</span> &nbsp;<strong>Segmentación.</strong> Las
+              reacciones del público marcan frontera de párrafo; los fragmentos bajo
+              15 palabras se fusionan hacia adelante. Se retiran de la transcripción
+              las repeticiones coreadas.</li>
+            <li style="padding:.6rem 0;border-bottom:1px solid var(--regla)">
+              <span class="num">02</span> &nbsp;<strong>Preprocesamiento.</strong> Sin
+              puntuación, stopwords en español, mínimo 2 documentos. Sin estemizar en el
+              pipeline principal: las figuras dicen «autoridad», no «autorid».</li>
+            <li style="padding:.6rem 0;border-bottom:1px solid var(--regla)">
+              <span class="num">03</span> &nbsp;<strong>Pasada léxica.</strong>
+              Frecuencias, colocaciones por lambda y concordancias sobre tokens crudos,
+              con el contexto intacto.</li>
+            <li style="padding:.6rem 0;border-bottom:1px solid var(--regla)">
+              <span class="num">04</span> &nbsp;<strong>Diccionario temático.</strong>
+              Seis claves, 172 términos, auditado contra el corpus: 0 términos sin match.
+              Asignación al tema dominante con umbral de 2 coincidencias.</li>
+            <li style="padding:.6rem 0">
+              <span class="num">05</span> &nbsp;<strong>Sentimiento.</strong> Diccionario
+              NRC en español, score neto (pos − neg) / (pos + neg + 1) por párrafo.
+              Replicado con corpus estemizado como control.</li>
+          </ol>
+        </div>
+
+        <!-- ---------- Resultados ---------- -->
+        <div class="bloque">
+          <p class="kicker">Resultados</p>
+
+          <div class="hallazgo">
+            <span class="et">R1 · Keyness (χ²)</span>
+            <h4>La unidad se nombra junto al agravio</h4>
+            <p>El tema «unión y diferencia» se distingue del resto del corpus por
+            <em>ideas</em>, <em>fuerza</em> y <em>unión</em> — y también por
+            <em>agravio</em> y <em>tratar</em>. El vocabulario de la convivencia y el
+            del conflicto ocupan los mismos párrafos.</p>
+            <table class="tabla-simple">
+              <thead><tr><th scope="col">Término</th><th scope="col">χ²</th></tr></thead>
+              <tbody>
+                <tr><td>ideas</td><td>40,0</td></tr>
+                <tr><td>fuerza</td><td>30,0</td></tr>
+                <tr><td>unión</td><td>26,0</td></tr>
+                <tr><td>agravio</td><td>10,6</td></tr>
+                <tr><td>hará</td><td>10,6</td></tr>
+                <tr><td>idea</td><td>7,8</td></tr>
+                <tr><td>tratar</td><td>6,1</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="hallazgo">
+            <span class="et">R2 · Keyness (χ²)</span>
+            <h4>El eje de autoridad se apoya en dos términos</h4>
+            <p><em>Poder</em> y <em>autoridad</em> encabezan el bloque y el resto cae
+            a distancia. Aparecen 8 y 9 veces en el discurso, y el texto dedica un
+            pasaje entero a distinguir uno de otro.</p>
+            <table class="tabla-simple">
+              <thead><tr><th scope="col">Término</th><th scope="col">χ²</th></tr></thead>
+              <tbody>
+                <tr><td>poder</td><td>38,5</td></tr>
+                <tr><td>autoridad</td><td>33,1</td></tr>
+                <tr><td>gobernar</td><td>6,8</td></tr>
+                <tr><td>sentido</td><td>4,5</td></tr>
+                <tr><td>gobierno</td><td>3,1</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="hallazgo">
+            <span class="et">R3 · Reparto temático</span>
+            <h4>Seis vocabularios, poco solapamiento</h4>
+            <p>El tema «gente y territorio» quedó en 3 párrafos y se colapsó en la
+            categoría residual. El 19,6% de los párrafos activa más de un tema: la
+            asignación al dominante pierde esa información.</p>
+            <table class="tabla-simple">
+              <thead><tr><th scope="col">Tema</th><th scope="col">Párrafos</th><th scope="col">%</th></tr></thead>
+              <tbody>
+                <tr><td>general (residual)</td><td>41</td><td>44,6</td></tr>
+                <tr><td>oficio político</td><td>12</td><td>13,0</td></tr>
+                <tr><td>autoridad y poder</td><td>11</td><td>12,0</td></tr>
+                <tr><td>unión y diferencia</td><td>11</td><td>12,0</td></tr>
+                <tr><td>biografía y afecto</td><td>9</td><td>9,8</td></tr>
+                <tr><td>Partido Nacional</td><td>8</td><td>8,7</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="hallazgo">
+            <span class="et">R4 · Sentimiento (NRC)</span>
+            <h4>El tema de la unión es el de tono más bajo</h4>
+            <p>Score neto medio por tema. «Unión y diferencia» queda último y su
+            mediana es 0,00, igual que la de «biografía y afecto». Por tercios del
+            discurso: inicio 0,26 → medio 0,21 → cierre 0,36.</p>
+            <table class="tabla-simple">
+              <thead><tr><th scope="col">Tema</th><th scope="col">Media</th><th scope="col">Mediana</th></tr></thead>
+              <tbody>
+                <tr><td>general</td><td>0,33</td><td>0,50</td></tr>
+                <tr><td>autoridad y poder</td><td>0,32</td><td>0,40</td></tr>
+                <tr><td>Partido Nacional</td><td>0,29</td><td>0,33</td></tr>
+                <tr><td>oficio político</td><td>0,26</td><td>0,45</td></tr>
+                <tr><td>biografía y afecto</td><td>0,21</td><td>0,00</td></tr>
+                <tr><td>unión y diferencia</td><td>0,10</td><td>0,00</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <details class="transcripcion">
-          <summary>Texto de las láminas</summary>
-          <ol>
-            <li>Texto completo de la lámina 1.</li>
-            <li>Texto completo de la lámina 2.</li>
-            <li>Texto completo de la lámina 3.</li>
-            <li>Texto completo de la lámina 4.</li>
-          </ol>
-        </details>
-      </div>
+        <!-- ---------- Citas ---------- -->
+        <div class="bloque">
+          <p class="kicker">Citas textuales</p>
+          <div class="citas">
+            <blockquote>«Somos idea. La unión nos hará fuerza. ¿De qué unión estamos
+              hablando? Yo interpreto, déjenme, que estamos hablando de dos tipos de
+              uniones.»<cite>Párrafo 034</cite></blockquote>
 
-      <!-- ---------- Firma y correcciones ---------- -->
-      <footer class="firma">
-        <p>Ficha cerrada por [nombre] el [dd/mm/aaaa].</p>
-        <h4>Correcciones</h4>
-        <p>No hubo correcciones en esta ficha.</p>
-      </footer>
+            <blockquote>«[...] y estoy hablando de todo el abanico, de todo el abanico
+              y por eso la unión es como concebir nuestro país.»<cite>Párrafo 038</cite></blockquote>
+
+            <blockquote>«Nadie. Por eso no hay que curar heridas, hay que no lastimar.»
+              <cite>Párrafo 047</cite></blockquote>
+
+            <blockquote>«Por suerte, nosotros elegimos la política, la política que es y
+              debe ser una actividad honorable y la tenemos que cuidar para que la
+              política sea honorable.»<cite>Párrafo 012</cite></blockquote>
+
+            <blockquote>«[...] y flaco favor a la política si termina siendo un concurso
+              de egos el insulto o el agravio.»<cite>Párrafo 024</cite></blockquote>
+
+            <blockquote>«Es más, nací y ya no había política, había dictadura. Así que
+              que nadie me diga que los tiempos pasados fueron mejores [...]»
+              <cite>Párrafo 015</cite></blockquote>
+          </div>
+        </div>
+
+        <!-- ---------- Lectura ---------- -->
+        <div class="bloque">
+          <p class="kicker">Lectura del léxico</p>
+          <div class="interpretacion">
+            <span class="marcador">Interpretación</span>
+            <p>El discurso se organiza en dos ejes léxicos separados: uno
+            biográfico-institucional —<em>poder</em>, <em>autoridad</em>,
+            <em>gobierno</em>— y uno normativo sobre la convivencia interna —<em>ideas</em>,
+            <em>unión</em>, <em>fuerza</em>.</p>
+            <p>El segundo eje es el único donde aparece el vocabulario del conflicto
+            —<em>agravio</em>, <em>insulto</em>, <em>egos</em>— y es también el de menor
+            carga positiva en el diccionario NRC.</p>
+            <p><strong>El llamado a la unión se formula con el léxico de aquello que la
+            amenaza.</strong></p>
+            <p style="font-size:.87rem;color:var(--gris);margin-top:1rem">Esto es
+            descripción léxica, no verificación. Las afirmaciones fácticas del discurso
+            se chequean en una pasada aparte.</p>
+          </div>
+        </div>
+
+        <!-- ---------- Limitaciones ---------- -->
+        <div class="bloque">
+          <p class="kicker">Limitaciones</p>
+          <ul class="lista-no">
+            <li>El número de tópicos del modelo estructural no está fijado. En tres
+            corridas del mismo script sobre este corpus, el máximo de coherencia cayó en
+            K = 8, K = 10 y K = 11 según el contexto de ejecución. Por eso no se reporta
+            acá ninguna solución de tópicos.</li>
+            <li>El NRC está traducido: la cobertura mediana es del 5,9% de las palabras
+            por párrafo. El score es ruidoso en textos cortos.</li>
+            <li>El sentimiento mide tono del vocabulario, no actitud del hablante.</li>
+            <li>El 19,6% de los párrafos activa más de un tema; la asignación al
+            dominante pierde esa información.</li>
+            <li>Corpus de un solo discurso y un solo actor. No hay comparación con otros
+            actores en la misma ventana temporal.</li>
+            <li>Control con estemizado: coherencia media −162,9 contra −158,9 sin
+            estemizar, exclusividad 9,35 contra 9,27. Los temas se sostienen.</li>
+          </ul>
+        </div>
+
+        <!-- ---------- Firma ---------- -->
+        <footer class="firma">
+          <p>Ficha cerrada por [nombre] el [dd/mm/aaaa]. Código y registro completo de
+          consola disponibles en el repositorio.</p>
+          <h4>Correcciones</h4>
+          <p>No hubo correcciones en esta ficha.</p>
+        </footer>
+
+        </div>
+      </details>
 
     </article>
     <!-- FIN DE LA FICHA — copiá desde <article class="ficha"> hasta acá -->
